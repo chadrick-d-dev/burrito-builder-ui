@@ -40,21 +40,6 @@ describe('OrderForm', () => {
     const order = screen.getByText('Order: beans')
     expect(order).toBeInTheDocument()
   })
-  it('should clear order and name input on submit when user has given a name and clicked desired ingredients', () => {
-   
-    const input = screen.getByRole('textbox')
-    fireEvent.change(input, { target: { value: 'Tom' } })
-    const name = screen.getByDisplayValue('Tom')
-    expect(name).toBeInTheDocument()
-    const beans = screen.getByText('beans')
-    userEvent.click(beans)
-    const submitButton = screen.getByText('Submit Order')
-    userEvent.click(submitButton)
-    const nothing = screen.getByText('Order: Nothing selected')
-    const nameInput = screen.getByPlaceholderText('Name')
-    expect(nothing).toBeInTheDocument()
-    expect(nameInput).toBeInTheDocument()
-  })
   it('should not clear name on submit if user has only given a name', () => {
     const input = screen.getByRole('textbox')
     fireEvent.change(input, { target: { value: 'Tom' } })

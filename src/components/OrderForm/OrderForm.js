@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { postOrder } from '../../apiCalls.js';
 
 class OrderForm extends Component {
-  constructor() {
+  constructor({takeOrder, postOrder}) {
     super();
     this.state = {
       name: '',
@@ -10,18 +9,12 @@ class OrderForm extends Component {
     }
   }
 
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.clearInputs();
-  }
-
   handleNameChange = (e) => {
     let name = e.target.name
     this.setState({ [name]: e.target.value })
   }
 
-  handleIngredientChange= (e) => {
+  handleIngredientChange = (e) => {
     const name = e.target.name
     let ingredientsArray = this.state.ingredients;
     
@@ -39,7 +32,8 @@ class OrderForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.name && this.state.ingredients.length > 0) {
-      postOrder(this.state.name, this.state.ingredients)
+      this.props.postOrder(this.state.name, this.state.ingredients)
+        .then(newOrder => this.props.takeOrder(newOrder))
       this.clearInputs()
     }
   }
