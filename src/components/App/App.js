@@ -5,12 +5,22 @@ import Orders from '../../components/Orders/Orders';
 import OrderForm from '../../components/OrderForm/OrderForm';
 
 class App extends Component {
-  constructor(props) {
-    super();
+  constructor() {
+    super()
+    this.state = {
+      orders: [] 
+    }
   }
 
   componentDidMount() {
     getOrders()
+      .then(orders => this.setState({orders:orders.orders}))
+      .catch(err => console.error('Error fetching:', err));
+  }
+
+  componentDidUpdate() {
+    getOrders()
+      .then(orders => this.setState({ orders: orders.orders }))
       .catch(err => console.error('Error fetching:', err));
   }
 
